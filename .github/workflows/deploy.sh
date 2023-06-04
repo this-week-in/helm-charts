@@ -2,4 +2,4 @@
 
 cd $GITHUB_WORKSPACE 
 
-./helm_package.sh
+# ./helm_package.sh

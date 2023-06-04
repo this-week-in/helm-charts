@@ -60,4 +60,4 @@ kubectl create job --from=cronjob/${NS}-twi-feed-ingest-cronjob ${NS}-twi-feed-i
 ```
 
 ## Build
-Want to publish a new version of the chart? Run `helm_package.sh` 
+Want to publish a new version of the chart? Run `helm_package.sh` after you've made changes to the manifests, then `git commit` and `git push`. That's all there is to it. We're using Github Pages as an HTTP server for our Helm Chart.
