@@ -57,13 +57,11 @@ metadata:
     kubernetes.io/ingress.global-static-ip-name: "{{ .Values.twi.prefix }}-twi-studio-ip"
   name:  {{ .Values.twi.prefix }}-twi-studio-ingress
 spec:
-  rules:
-    - host: studio.{{ .Values.twi.domain }}
-      http:
-        paths:
-          - backend:
-              serviceName: {{ .Values.twi.prefix }}-twi-studio-service
-              servicePort: 80
+  defaultBackend:
+    service:
+      name: {{ .Values.twi.prefix }}-twi-studio-service
+      port:
+        number: 80              
 ---
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate

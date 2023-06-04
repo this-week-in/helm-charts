@@ -62,13 +62,11 @@ metadata:
     kubernetes.io/ingress.global-static-ip-name: "{{ .Values.twi.prefix }}-twi-bookmark-api-ip"
   name: {{ .Values.twi.prefix }}-twi-bookmark-api-ingress
 spec:
-  rules:
-    - host: bookmark-api.{{ .Values.twi.domain }}
-      http:
-        paths:
-          - backend:
-              serviceName: {{ .Values.twi.prefix }}-twi-bookmark-api-service
-              servicePort: 80
+  defaultBackend:
+    service:
+      name: {{ .Values.twi.prefix }}-twi-bookmark-api-service
+      port:
+        number: 80
 ---
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
