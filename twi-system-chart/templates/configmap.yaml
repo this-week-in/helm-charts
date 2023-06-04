@@ -1,3 +1,4 @@
+kind: ConfigMap
 apiVersion: v1
 data:
   INGEST_INGESTED_TAG: "{{ .Values.twi.ingest.tags.ingested  }}"
@@ -17,6 +18,5 @@ data:
   INGEST_FEED_ENCODED_MAPPING_CONFIGURATION: "{{ .Values.twi.ingest.feed.mappings  }}"
   INGEST_TWITTER_ENCODED_MAPPING_CONFIGURATION: "{{ .Values.twi.ingest.twitter.mappings   }}"
   VUE_APP_SERVICE_ROOT: "https://bookmark-api.{{ .Values.twi.domain  }}"
-kind: ConfigMap
 metadata:
   name: "{{ .Values.twi.prefix }}-twi-configmap"
