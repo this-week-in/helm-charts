@@ -1,0 +1,22 @@
+apiVersion: v1
+data:
+  INGEST_INGESTED_TAG: "{{ .Values.twi.ingest.tags.ingested  }}"
+  INGEST_TAGS: "{{ .Values.twi.ingest.tags.ingest   }}"
+  PINBOARD_TOKEN: "{{ .Values.twi.pinboard.token    }}"
+  SPRING_DATASOURCE_PASSWORD:  "{{ .Values.twi.postgres.password }}"
+  SPRING_DATASOURCE_URL: "jdbc:postgresql://{{ .Values.twi.postgres.host }}/{{ .Values.twi.postgres.schema }}"
+  SPRING_DATASOURCE_USERNAME: "{{ .Values.twi.postgres.username }}"
+  SPRING_R2DBC_PASSWORD:  "{{ .Values.twi.postgres.password }}"
+  SPRING_R2DBC_URL: "r2dbc:postgres://{{ .Values.twi.postgres.host }}/{{ .Values.twi.postgres.schema }}"
+  SPRING_R2DBC_USERNAME:  "{{ .Values.twi.postgres.username }}"
+  SPRING_REDIS_HOST:  "{{ .Values.twi.redis.host  }}"
+  SPRING_REDIS_PASSWORD:  "{{ .Values.twi.redis.password  }}"
+  SPRING_REDIS_PORT:  "{{ .Values.twi.redis.port  }}"
+  TWITTER_TWI_CLIENT_KEY:  "{{ .Values.twi.twitter.client_key }}"
+  TWITTER_TWI_CLIENT_KEY_SECRET: "{{ .Values.twi.twitter.client_key_secret }}"
+  INGEST_FEED_ENCODED_MAPPING_CONFIGURATION: "{{ .Values.twi.ingest.feed.mappings  }}"
+  INGEST_TWITTER_ENCODED_MAPPING_CONFIGURATION: "{{ .Values.twi.ingest.twitter.mappings   }}"
+  VUE_APP_SERVICE_ROOT: "https://bookmark-api.{{ .Values.twi.domain  }}"
+kind: ConfigMap
+metadata:
+  name: "{{ .Values.twi.prefix }}-twi-configmap"

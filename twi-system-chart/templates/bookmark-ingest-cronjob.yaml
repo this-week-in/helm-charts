@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Values.twi.prefix }}-twi-bookmark-ingest-cronjob
+spec:
+  schedule: "30 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum  }}
+
+        spec:
+          containers:
+            - name: {{ .Values.twi.prefix }}-twi-bookmark-ingest-job-container
+              image: gcr.io/pgtm-jlong/twi-bookmark-ingest-job:latest
+              imagePullPolicy: Always
+              envFrom:
+                - configMapRef:
+                    name: {{ .Values.twi.prefix }}-twi-configmap
+          restartPolicy: OnFailure

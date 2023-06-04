@@ -1,0 +1,22 @@
+---
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: {{ .Values.twi.prefix }}-twi-feed-ingest-cronjob
+spec:
+  schedule: "10 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          annotations:
+            checksum/config: {{ include (print $.Template.BasePath "/configmap.yaml") . | sha256sum  }}
+        spec:
+          containers:
+            - name: {{ .Values.twi.prefix }}-feed-ingest-cronjob-container 
+              image: gcr.io/bootiful/twi-feed-ingest-job:latest
+              imagePullPolicy: Always
+              envFrom:
+                - configMapRef:
+                    name: {{ .Values.twi.prefix }}-twi-configmap
+          restartPolicy: OnFailure

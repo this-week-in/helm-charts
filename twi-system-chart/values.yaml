@@ -1,0 +1,27 @@
+twi:
+  twitter:
+    client_key : clientkey 
+    client_key_secret : clientkeysecret 
+  domain: twidomain
+  prefix: twi
+  pinboard:  
+    token: pinboard-token
+  ingest: 
+    twitter: 
+      mappings: ""
+    feed:
+      mappings: ""
+    tags :
+      ingest: ingest-ready
+      ingested : ingest-done 
+  
+  redis:
+    host: redis-host 
+    password: redis-pw 
+    port: redis-port 
+  postgres:
+    username: postgres-user
+    password:  postgres-password 
+    host:  postgres-host 
+    schema:  postgres-schema
+    port:  5432 
