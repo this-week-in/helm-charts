@@ -20,7 +20,7 @@ spec:
         - envFrom:
             - configMapRef:
                 name: {{ .Values.twi.prefix }}-twi-configmap 
-          image: gcr.io/bootiful/twi-studio:latest
+          image: gcr.io/pgtm-jlong/studio-site:latest
           imagePullPolicy: Always
           name:   {{ .Values.twi.prefix }}-twi-studio
           readinessProbe:

@@ -14,7 +14,7 @@ spec:
         spec:
           containers:
             - name: {{ .Values.twi.prefix }}-feed-ingest-cronjob-container 
-              image: gcr.io/bootiful/twi-feed-ingest-job:latest
+              image: gcr.io/pgtm-jlong/twi-feed-ingest-job:latest
               imagePullPolicy: Always
               envFrom:
                 - configMapRef:
