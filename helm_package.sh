@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-CN=.
+CN=twi
 helm lint $CN
 helm package $CN
 Helm repo index  .
