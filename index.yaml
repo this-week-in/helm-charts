@@ -3,9 +3,9 @@ entries:
   twi-helm-chart:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-06-06T16:11:49.929312-05:00"
+    created: "2023-06-06T16:32:10.589573-05:00"
     description: A Helm chart to deploy the "This Week In" system to Kubernetes
-    digest: c71669b82db3ba25712a310ca03e383928689d9440a215e163d68723661df9a4
+    digest: 7cfd5002cfc7a44c23381de8471ecd15f6fd3dad131ddfd27dcd7ca23617ebe4
     name: twi-helm-chart
     type: application
     urls:
@@ -13,7 +13,7 @@ entries:
     version: 0.1.2
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2023-06-06T16:11:49.929062-05:00"
+    created: "2023-06-06T16:32:10.589318-05:00"
     description: A Helm chart to deploy the "This Week In" system to Kubernetes
     digest: 7a3ec1fa7c6ac3fad31ae2868655a18c0f434bd0b19a5ddd85d4a9c05fbbd1d2
     name: twi-helm-chart
@@ -21,4 +21,4 @@ entries:
     urls:
     - twi-helm-chart-0.1.1.tgz
     version: 0.1.1
-generated: "2023-06-06T16:11:49.928709-05:00"
+generated: "2023-06-06T16:32:10.588953-05:00"
