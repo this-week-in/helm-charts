@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-CN=twi-system-chart
+CN=.
 helm lint $CN
 helm package $CN
 Helm repo index  .
