@@ -2,4 +2,4 @@
 CN=twi
 helm lint $CN
 helm package $CN
-Helm repo index  .
+helm repo index --url https://this-week-in.github.io/helm-charts/ .
