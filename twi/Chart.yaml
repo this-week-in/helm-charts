@@ -1,6 +1,6 @@
 apiVersion: v2
-name: twi-helm-chart
+name: twi
 description: A Helm chart to deploy the "This Week In" system to Kubernetes
 type: application
-version: 0.1.3
+version: 0.1.4
 icon: https://avatars.githubusercontent.com/u/31034885?s=200&v=4
