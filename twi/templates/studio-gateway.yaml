@@ -18,32 +18,26 @@ spec:
     spec:
       containers:
 
+          
+
         - envFrom:
             - configMapRef:
                 name:  {{ .Values.twi.prefix }}-twi-configmap
           image: gcr.io/pgtm-jlong/twi-studio-gateway
           env:
-            
-            - name: "TWI_GATEWAY_STUDIO_CLIENT_URI"
-              value: https://studio-client.{{ .Values.twi.domain }}
-            
-            - name: "TWI_GATEWAY_BOOKMARKS_API_URI"
-              value: https://bookmark-api.{{ .Values.twi.domain }}
-            
             - name: "SERVER_PORT"
               value: "8080"
-
           imagePullPolicy: Always
           name:   {{ .Values.twi.prefix }}-twi-studio-gateway
           readinessProbe:
-            failureThreshold: 120
-            periodSeconds: 120
+            failureThreshold: 240
+            periodSeconds: 240
             httpGet:
               port: 8080
               path: /actuator/health/readiness
           livenessProbe:
-            failureThreshold: 120
-            periodSeconds: 120            
+            failureThreshold: 240
+            periodSeconds: 240            
             httpGet:
               port: 8080
               path: /actuator/health/liveness
@@ -54,12 +48,11 @@ spec:
               memory: "1Gi"
             requests:
               memory: "1Gi"
-
 ---
-apiVersion: v1 
-kind: Service 
+apiVersion:  v1 
+kind:  Service 
 metadata:
-  name: {{ .Values.twi.prefix }}-twi-studio-gateway-service
+  name:  {{ .Values.twi.prefix }}-twi-studio-gateway-service
   annotations:
     cloud.google.com/neg: '{"ingress": true}'
 spec:
@@ -77,18 +70,18 @@ metadata:
     ingress.kubernetes.io/force-ssl-redirect: "true"
     networking.gke.io/managed-certificates: "{{ .Values.twi.prefix }}-twi-studio-gateway-certificate"
     kubernetes.io/ingress.global-static-ip-name: "{{ .Values.twi.prefix }}-twi-studio-gateway-ip"
-  name:  {{ .Values.twi.prefix }}-twi-studio-gateway-ingress
+  name: {{ .Values.twi.prefix }}-twi-studio-gateway-ingress
 spec:
   defaultBackend:
     service:
       name: {{ .Values.twi.prefix }}-twi-studio-gateway-service
       port:
-        number: 80              
+        number: 80
 ---
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
 metadata:
-  name:  {{ .Values.twi.prefix }}-twi-studio-gateway-certificate
+  name: {{ .Values.twi.prefix }}-twi-studio-gateway-certificate
 spec:
   domains:
     - studio.{{ .Values.twi.domain }}
