@@ -23,8 +23,16 @@ spec:
                 name:  {{ .Values.twi.prefix }}-twi-configmap
           image: gcr.io/pgtm-jlong/twi-studio-gateway
           env:
+            
+            - name: "TWI_GATEWAY_STUDIO_CLIENT_URI"
+              value: studio-client.{{ .Values.twi.domain }}
+            
+            - name: "TWI_GATEWAY_BOOKMARKS_API_URI"
+              value: bookmark-api.{{ .Values.twi.domain }}
+            
             - name: "SERVER_PORT"
               value: "8080"
+
           imagePullPolicy: Always
           name:   {{ .Values.twi.prefix }}-twi-studio-gateway
           readinessProbe:
