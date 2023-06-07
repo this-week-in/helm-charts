@@ -25,9 +25,18 @@ spec:
 
             - name: "SERVER_PORT"
               value: "8080"
-                        
+
           imagePullPolicy: Always
           name:   {{ .Values.twi.prefix }}-twi-bookmark-api
+          livenessProbe:
+            exec:
+              command:
+              - cat
+              - /tmp/health
+            initialDelaySeconds: 240
+            failureThreshold: 240
+            periodSeconds: 240
+
           # readinessProbe:
           #   failureThreshold: 240
           #   periodSeconds: 240

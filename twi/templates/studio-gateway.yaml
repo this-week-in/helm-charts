@@ -36,6 +36,14 @@ spec:
               value: "8080"
           imagePullPolicy: Always
           name:   {{ .Values.twi.prefix }}-twi-studio-gateway
+          livenessProbe:
+            exec:
+              command:
+              - cat
+              - /tmp/health
+            initialDelaySeconds: 240
+            periodSeconds: 240
+
           # readinessProbe:
           #   failureThreshold: 240
           #   periodSeconds: 240
