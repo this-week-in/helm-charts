@@ -4,7 +4,7 @@ kind: CronJob
 metadata:
   name:  {{ .Values.twi.prefix }}-twi-twitter-ingest-cronjob
 spec:
-  schedule: "10 * * * *"
+  schedule: "0 0 * * *"
   jobTemplate:
     spec:
       template:
