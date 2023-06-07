@@ -36,7 +36,14 @@ spec:
             initialDelaySeconds: 240
             failureThreshold: 240
             periodSeconds: 240
-
+          readinessProbe:
+            exec:
+              command:
+              - cat
+              - /tmp/health
+            initialDelaySeconds: 240
+            failureThreshold: 240
+            periodSeconds: 240
           # readinessProbe:
           #   failureThreshold: 240
           #   periodSeconds: 240
