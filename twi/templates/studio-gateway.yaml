@@ -91,4 +91,4 @@ metadata:
   name:  {{ .Values.twi.prefix }}-twi-studio-gateway-certificate
 spec:
   domains:
-    - studio-gateway.{{ .Values.twi.domain }}
+    - studio.{{ .Values.twi.domain }}
