@@ -28,18 +28,18 @@ spec:
                         
           imagePullPolicy: Always
           name:   {{ .Values.twi.prefix }}-twi-bookmark-api
-          readinessProbe:
-            failureThreshold: 240
-            periodSeconds: 240
-            httpGet:
-              port: 8080
-              path: /actuator/health/readiness
-          livenessProbe:
-            failureThreshold: 240
-            periodSeconds: 240            
-            httpGet:
-              port: 8080
-              path: /actuator/health/liveness
+          # readinessProbe:
+          #   failureThreshold: 240
+          #   periodSeconds: 240
+          #   httpGet:
+          #     port: 8080
+          #     path: /actuator/health/readiness
+          # livenessProbe:
+          #   failureThreshold: 240
+          #   periodSeconds: 240            
+          #   httpGet:
+          #     port: 8080
+          #     path: /actuator/health/liveness
           ports:
             - containerPort: 8080
           resources:
