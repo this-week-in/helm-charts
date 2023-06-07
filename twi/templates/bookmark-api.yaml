@@ -18,14 +18,15 @@ spec:
     spec:
       containers:
 
-          env:
-            - name: SERVER_PORT
-              value: 8080
+          
 
         - envFrom:
             - configMapRef:
                 name:  {{ .Values.twi.prefix }}-twi-configmap
           image: gcr.io/pgtm-jlong/twi-bookmark-api
+          env:
+            - name: "SERVER_PORT"
+              value: "8080"
           imagePullPolicy: Always
           name:   {{ .Values.twi.prefix }}-twi-bookmark-api
           readinessProbe:
