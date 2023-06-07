@@ -20,7 +20,7 @@ spec:
         - envFrom:
             - configMapRef:
                 name:  {{ .Values.twi.prefix }}-twi-configmap
-          image: gcr.io/pgtm-jlong/twi-bookmark-api:latest
+          image: gcr.io/pgtm-jlong/twi-bookmark-api
           imagePullPolicy: Always
           name:   {{ .Values.twi.prefix }}-twi-bookmark-api
           readinessProbe:
