@@ -23,14 +23,9 @@ spec:
           image: gcr.io/pgtm-jlong/twi-bookmark-api
           env:
 
-            - name: "TWI_GATEWAY_STUDIO_CLIENT_URI"
-              value: https://studio-client.{{ .Values.twi.domain }}
-
-            - name: "TWI_GATEWAY_BOOKMARKS_API_URI"
-              value: https://bookmark-api.{{ .Values.twi.domain }}
-            
             - name: "SERVER_PORT"
               value: "8080"
+                        
           imagePullPolicy: Always
           name:   {{ .Values.twi.prefix }}-twi-bookmark-api
           readinessProbe:
