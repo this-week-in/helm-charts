@@ -1,0 +1,252 @@
+---
+# Source: twi/templates/bookmark-api.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.twi.prefix }}-twi-bookmark-api-service
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: {{ .Values.twi.prefix }}-twi-bookmark-api
+  type: LoadBalancer
+---
+# Source: twi/templates/studio-client.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.twi.prefix }}-twi-studio-client-service
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: {{ .Values.twi.prefix }}-twi-studio-client
+  type: LoadBalancer
+---
+# Source: twi/templates/studio-gateway.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.twi.prefix }}-twi-studio-gateway-service
+  annotations:
+    cloud.google.com/neg: '{"ingress": true}'
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    app: {{ .Values.twi.prefix }}-twi-studio-gateway
+  type: LoadBalancer
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.twi.prefix }}-twi-bookmark-api
+  name: {{ .Values.twi.prefix }}-twi-bookmark-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.twi.prefix }}-twi-bookmark-api
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.twi.prefix }}-twi-bookmark-api
+    spec:
+      containers:
+        - image: gcr.io/pgtm-jlong/twi-bookmark-api
+          imagePullPolicy: Always
+          name: {{ .Values.twi.prefix }}-twi-bookmark-api
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.twi.prefix }}-twi-configmap
+          env:
+            - name: SERVER_PORT
+              value: "8080"
+
+          ports:
+            - containerPort: 8080
+                      
+          startupProbe:
+            failureThreshold: 120
+            periodSeconds: 120
+            httpGet:
+              port: 8080
+              path: /actuator/health/readiness
+
+          readinessProbe:
+            failureThreshold: 120
+            periodSeconds: 120
+            httpGet:
+              port: 8080
+              path: /actuator/health/readiness
+
+          livenessProbe:
+            failureThreshold: 120
+            periodSeconds: 120
+            httpGet:
+              port: 8080
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.twi.prefix }}-twi-studio-client
+  labels:
+    app: {{ .Values.twi.prefix }}-twi-studio-client
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.twi.prefix }}-twi-studio-client
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.twi.prefix }}-twi-studio-client
+    spec:
+      containers:
+        - name: {{ .Values.twi.prefix }}-twi-studio-client
+          image: gcr.io/pgtm-jlong/twi-studio-client
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.twi.prefix }}-twi-configmap
+          ports:
+            - containerPort: 8080
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: {{ .Values.twi.prefix }}-twi-studio-gateway
+  name: {{ .Values.twi.prefix }}-twi-studio-gateway
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ .Values.twi.prefix }}-twi-studio-gateway
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.twi.prefix }}-twi-studio-gateway
+    spec:
+      containers:
+        - image: gcr.io/pgtm-jlong/twi-studio-gateway
+          imagePullPolicy: Always
+          name: {{ .Values.twi.prefix }}-twi-studio-gateway
+          envFrom:
+            - configMapRef:
+                name: {{ .Values.twi.prefix }}-twi-configmap
+          env:
+            - name: TWI_GATEWAY_STUDIO_CLIENT_URI
+              value: "https://studio-client.{{ .Values.twi.prefix }}.online"
+            - name: TWI_GATEWAY_BOOKMARKS_API_URI
+              value: "https://bookmark-api.{{ .Values.twi.prefix }}.online"
+            - name: SERVER_PORT
+              value: "8080"
+
+          ports:
+            - containerPort: 8080
+
+          startupProbe:
+            failureThreshold: 120
+            periodSeconds: 120
+            httpGet:
+              port: 8080
+              path: /actuator/health/readiness
+
+          readinessProbe:
+            failureThreshold: 120
+            periodSeconds: 120
+            httpGet:
+              port: 8080
+              path: /actuator/health/readiness
+
+          livenessProbe:
+            failureThreshold: 120
+            periodSeconds: 120
+            httpGet:
+              port: 8080
+
+---
+# Source: twi/templates/bookmark-api.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+    networking.gke.io/managed-certificates: "{{ .Values.twi.prefix }}-twi-bookmark-api-certificate"
+    kubernetes.io/ingress.global-static-ip-name: "{{ .Values.twi.prefix }}-twi-bookmark-api-ip"
+  name: {{ .Values.twi.prefix }}-twi-bookmark-api-ingress
+spec:
+  defaultBackend:
+    service:
+      name: {{ .Values.twi.prefix }}-twi-bookmark-api-service
+      port:
+        number: 80
+---
+# Source: twi/templates/studio-client.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+    networking.gke.io/managed-certificates: "{{ .Values.twi.prefix }}-twi-studio-client-certificate"
+    kubernetes.io/ingress.global-static-ip-name: "{{ .Values.twi.prefix }}-twi-studio-client-ip"
+  name: {{ .Values.twi.prefix }}-twi-studio-client-ingress
+spec:
+  defaultBackend:
+    service:
+      name: {{ .Values.twi.prefix }}-twi-studio-client-service
+      port:
+        number: 80
+---
+# Source: twi/templates/studio-gateway.yaml
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    ingress.kubernetes.io/force-ssl-redirect: "true"
+    networking.gke.io/managed-certificates: "{{ .Values.twi.prefix }}-twi-studio-gateway-certificate"
+    kubernetes.io/ingress.global-static-ip-name: "{{ .Values.twi.prefix }}-twi-studio-gateway-ip"
+  name: {{ .Values.twi.prefix }}-twi-studio-gateway-ingress
+spec:
+  defaultBackend:
+    service:
+      name: {{ .Values.twi.prefix }}-twi-studio-gateway-service
+      port:
+        number: 80
+---
+# Source: twi/templates/bookmark-api.yaml
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: {{ .Values.twi.prefix }}-twi-bookmark-api-certificate
+spec:
+  domains:
+    - bookmark-api.{{ .Values.twi.domain }}
+---
+# Source: twi/templates/studio-client.yaml
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: {{ .Values.twi.prefix }}-twi-studio-client-certificate
+spec:
+  domains:
+    - studio-client.{{ .Values.twi.domain }}
+---
+# Source: twi/templates/studio-gateway.yaml
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: {{ .Values.twi.prefix }}-twi-studio-gateway-certificate
+spec:
+  domains:
+    - studio.{{ .Values.twi.domain }}
