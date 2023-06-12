@@ -181,7 +181,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    ingress.kubernetes.io/force-ssl-redirect: "true"
+    # ingress.kubernetes.io/force-ssl-redirect: "true"
     networking.gke.io/managed-certificates: "{{ .Values.twi.prefix }}-twi-bookmark-api-certificate"
     kubernetes.io/ingress.global-static-ip-name: "{{ .Values.twi.prefix }}-twi-bookmark-api-ip"
   name: {{ .Values.twi.prefix }}-twi-bookmark-api-ingress
@@ -197,7 +197,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    ingress.kubernetes.io/force-ssl-redirect: "true"
+    # ingress.kubernetes.io/force-ssl-redirect: "true"
     networking.gke.io/managed-certificates: "{{ .Values.twi.prefix }}-twi-studio-client-certificate"
     kubernetes.io/ingress.global-static-ip-name: "{{ .Values.twi.prefix }}-twi-studio-client-ip"
   name: {{ .Values.twi.prefix }}-twi-studio-client-ingress
@@ -213,7 +213,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   annotations:
-    ingress.kubernetes.io/force-ssl-redirect: "true"
+    # ingress.kubernetes.io/force-ssl-redirect: "true"
     networking.gke.io/managed-certificates: "{{ .Values.twi.prefix }}-twi-studio-gateway-certificate"
     kubernetes.io/ingress.global-static-ip-name: "{{ .Values.twi.prefix }}-twi-studio-gateway-ip"
   name: {{ .Values.twi.prefix }}-twi-studio-gateway-ingress
