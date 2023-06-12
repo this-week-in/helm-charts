@@ -146,9 +146,9 @@ spec:
                 name: {{ .Values.twi.prefix }}-twi-configmap
           env:
             - name: TWI_GATEWAY_STUDIO_CLIENT_URI
-              value: "https://studio-client.{{ .Values.twi.prefix }}.online"
+              value: "http://studio-client.{{ .Values.twi.prefix }}.online"
             - name: TWI_GATEWAY_BOOKMARKS_API_URI
-              value: "https://bookmark-api.{{ .Values.twi.prefix }}.online"
+              value: "http://bookmark-api.{{ .Values.twi.prefix }}.online"
             - name: SERVER_PORT
               value: "8080"
 
@@ -182,7 +182,7 @@ kind: Ingress
 metadata:
   annotations:
     # ingress.kubernetes.io/force-ssl-redirect: "true"
-    networking.gke.io/managed-certificates: "{{ .Values.twi.prefix }}-twi-bookmark-api-certificate"
+    # networking.gke.io/managed-certificates: "{{ .Values.twi.prefix }}-twi-bookmark-api-certificate"
     kubernetes.io/ingress.global-static-ip-name: "{{ .Values.twi.prefix }}-twi-bookmark-api-ip"
   name: {{ .Values.twi.prefix }}-twi-bookmark-api-ingress
 spec:
@@ -198,7 +198,7 @@ kind: Ingress
 metadata:
   annotations:
     # ingress.kubernetes.io/force-ssl-redirect: "true"
-    networking.gke.io/managed-certificates: "{{ .Values.twi.prefix }}-twi-studio-client-certificate"
+    # networking.gke.io/managed-certificates: "{{ .Values.twi.prefix }}-twi-studio-client-certificate"
     kubernetes.io/ingress.global-static-ip-name: "{{ .Values.twi.prefix }}-twi-studio-client-ip"
   name: {{ .Values.twi.prefix }}-twi-studio-client-ingress
 spec:
@@ -214,7 +214,7 @@ kind: Ingress
 metadata:
   annotations:
     # ingress.kubernetes.io/force-ssl-redirect: "true"
-    networking.gke.io/managed-certificates: "{{ .Values.twi.prefix }}-twi-studio-gateway-certificate"
+    # networking.gke.io/managed-certificates: "{{ .Values.twi.prefix }}-twi-studio-gateway-certificate"
     kubernetes.io/ingress.global-static-ip-name: "{{ .Values.twi.prefix }}-twi-studio-gateway-ip"
   name: {{ .Values.twi.prefix }}-twi-studio-gateway-ingress
 spec:
@@ -223,30 +223,30 @@ spec:
       name: {{ .Values.twi.prefix }}-twi-studio-gateway-service
       port:
         number: 80
----
-# Source: twi/templates/bookmark-api.yaml
-apiVersion: networking.gke.io/v1
-kind: ManagedCertificate
-metadata:
-  name: {{ .Values.twi.prefix }}-twi-bookmark-api-certificate
-spec:
-  domains:
-    - bookmark-api.{{ .Values.twi.domain }}
----
-# Source: twi/templates/studio-client.yaml
-apiVersion: networking.gke.io/v1
-kind: ManagedCertificate
-metadata:
-  name: {{ .Values.twi.prefix }}-twi-studio-client-certificate
-spec:
-  domains:
-    - studio-client.{{ .Values.twi.domain }}
----
-# Source: twi/templates/studio-gateway.yaml
-apiVersion: networking.gke.io/v1
-kind: ManagedCertificate
-metadata:
-  name: {{ .Values.twi.prefix }}-twi-studio-gateway-certificate
-spec:
-  domains:
-    - studio.{{ .Values.twi.domain }}
+# ---
+# # Source: twi/templates/bookmark-api.yaml
+# apiVersion: networking.gke.io/v1
+# kind: ManagedCertificate
+# metadata:
+#   name: {{ .Values.twi.prefix }}-twi-bookmark-api-certificate
+# spec:
+#   domains:
+#     - bookmark-api.{{ .Values.twi.domain }}
+# ---
+# # Source: twi/templates/studio-client.yaml
+# apiVersion: networking.gke.io/v1
+# kind: ManagedCertificate
+# metadata:
+#   name: {{ .Values.twi.prefix }}-twi-studio-client-certificate
+# spec:
+#   domains:
+#     - studio-client.{{ .Values.twi.domain }}
+# ---
+# # Source: twi/templates/studio-gateway.yaml
+# apiVersion: networking.gke.io/v1
+# kind: ManagedCertificate
+# metadata:
+#   name: {{ .Values.twi.prefix }}-twi-studio-gateway-certificate
+# spec:
+#   domains:
+#     - studio.{{ .Values.twi.domain }}
