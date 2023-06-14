@@ -146,9 +146,9 @@ spec:
                 name: {{ .Values.twi.prefix }}-twi-configmap
           env:
             - name: TWI_GATEWAY_STUDIO_CLIENT_URI
-              value: "https://studio-client.{{ .Values.twi.prefix }}.online"
+              value: "https://studio-client.{{ .Values.twi.domain  }}"
             - name: TWI_GATEWAY_BOOKMARKS_API_URI
-              value: "https://bookmark-api.{{ .Values.twi.prefix }}.online"
+              value: "https://bookmark-api.{{ .Values.twi.domain  }}"
             - name: SERVER_PORT
               value: "8080"
 
