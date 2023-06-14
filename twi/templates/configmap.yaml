@@ -20,6 +20,6 @@ data:
   TWITTER_TWI_CLIENT_KEY_SECRET: "{{ .Values.twi.twitter.client_key_secret }}"
   INGEST_FEED_ENCODED_MAPPING_CONFIGURATION: "{{ .Values.twi.ingest.feed.mappings  }}"
   INGEST_TWITTER_ENCODED_MAPPING_CONFIGURATION: "{{ .Values.twi.ingest.twitter.mappings   }}"
-  VUE_APP_SERVICE_ROOT: "http://bookmark-api.{{ .Values.twi.domain  }}"
+  VUE_APP_SERVICE_ROOT: "https://bookmark-api.{{ .Values.twi.domain  }}"
 metadata:
   name: "{{ .Values.twi.prefix }}-twi-configmap"
